@@ -74,6 +74,41 @@ public class App{
         /**
          * Création d'une ville
          */
-        Ville ville = new Ville();
+        //Ville ville = new Ville();
+
+        /** --------------------------------------------------------------------------------------
+         *                                  HERITAGE
+         * ---------------------------------------------------------------------------------------
+         */
+
+         // -------------------------------- Polymorphisme
+        //Définition d'un tableau de villes null
+        Ville[] tableau = new Ville[6];
+                
+        //Définition d'un tableau de noms de villes et un autre de nombres d'habitants
+        String[] tab = {"Marseille", "lille", "caen", "lyon", "paris", "nantes"};
+        int[] tab2 = {123456, 78456, 654987, 75832165, 1594, 213};
+                
+        //Les trois premiers éléments du tableau seront des villes,
+        //et le reste, des capitales
+        for(int i = 0; i < 6; i++){
+        if (i <3){
+            Ville V = new Ville(tab[i], "france", tab2[i]);
+            tableau[i] = V;
+        }
+                
+        else{
+            Capitale C = new Capitale(tab[i], tab2[i], "france", "la tour Eiffel");
+            tableau[i] = C;
+        }
+        }
+                        
+        //Il ne nous reste plus qu'à décrire tout notre tableau !
+        for(Ville V : tableau){
+            System.out.println(V.decrisToi()+"\n");
+            //Avec redéfinition de la classe toString (Résultat identique à la ligne précédente)
+            System.out.println(V.toString()+"\n");
+        }
+
     }
 }

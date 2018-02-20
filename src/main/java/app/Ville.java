@@ -4,16 +4,16 @@ public class Ville{
 
     // On les met en private pour pas quelles soient accessible via une instance de la classe Ville, exemple ville.nom
     // Ainsi on se protège de toutes modifications des valeurs depuis une autre classe 
-    private String nom;
-    private String pays;
-    private int nbHabitants;
-    private char categorie;
+    protected String nom;
+    protected String pays;
+    protected int nbHabitants;
+    protected char categorie;
 
     //Variables publiques qui comptent les instances
     public static int nbreInstances = 0;
 
     //Variable privée qui comptera aussi les instances
-    private static int nbreInstancesBis = 0;       
+    protected static int nbreInstancesBis = 0;       
 
     public Ville(){
         System.out.println("Création d'une ville!");
@@ -118,5 +118,10 @@ public class Ville{
         str = this.nom+" est une ville plus peuplée que "+v1.getNom();
         
         return str;
+    }
+
+    //Redéfinition de la méthode toString issu de la superclasse Object de Java
+    public String toString(){
+        return "\t"+this.nom+" est une ville de "+this.pays+", elle comporte : "+this.nbHabitants+" => elle est donc de catégorie : "+this.categorie;
     }
 }
