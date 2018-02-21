@@ -1,6 +1,7 @@
 package app;
 
 import java.util.Scanner;
+import app.abstractclass.*;
 
 public class App{
     
@@ -110,5 +111,41 @@ public class App{
             System.out.println(V.toString()+"\n");
         }
 
+         /** --------------------------------------------------------------------------------------
+         *                                  CLASSES ABSTRAITES ET INTERFACES
+         * ---------------------------------------------------------------------------------------
+         */
+        
+        // -------------------------------- Classes abstraites
+
+         Loup l = new Loup("Gris bleuté", 20);
+        l.boire(); // Appel de la méthode implémentée dans la classe Animal
+        l.manger(); // Appel de la méthode implémentée dans la classe Animal
+        l.deplacement(); // Appel de la méthode implémentée dans la classe Canin
+        l.crier(); // Appel de la méthode implémentée dans la classe Loup
+        System.out.println(l.toString()); // Appel de la méthode implémentée dans la classe Animal
+
+        // -------------------------------- Interfaces
+
+        //Les méthodes d'un chien 
+        Chien c = new Chien("Gris bleuté", 20);
+        c.boire();
+        c.manger();
+        c.deplacement();
+        c.crier();
+        System.out.println(c.toString());
+                
+        System.out.println("--------------------------------------------");
+        //Les méthodes de l'interface
+        c.faireCalin();
+        c.faireLeBeau();
+        c.faireLechouille();
+            
+        System.out.println("--------------------------------------------");
+        //Utilisons le polymorphisme de notre interface
+        Rintintin r = new Chien();
+        r.faireLeBeau();
+        r.faireCalin();
+        r.faireLechouille();
     }
 }
