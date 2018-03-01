@@ -16,6 +16,7 @@ public class Ville{
     protected static int nbreInstancesBis = 0;       
 
     public Ville(){
+        
         System.out.println("Création d'une ville!");
         nom = "Marciac";
         pays = "Gascogne";
@@ -27,16 +28,25 @@ public class Ville{
         nbreInstancesBis++;  
     }
 
-    public Ville(String pNom, String pPays, int pNbHabitants){
-        System.out.println("Création d'une ville!");
-        nom = pNom;
-        pays = pPays;
-        nbHabitants = pNbHabitants;
-        this.setCategorie();
+    public Ville(String pNom, String pPays, int pNbHabitants) throws NombreHabitantException, NomVilleException{
+        if(nbHabitants < 0){
+            // On utilise le second constructeur pour avoir plus d'informations
+            throw new NombreHabitantException(pNbHabitants); 
+        }
+        if(pNom.length() < 3){
+            throw new NomVilleException("le nom de la ville est inférieur à 3 caractères ! nom = " + pNom);
+        }
+        else {
+            System.out.println("Création d'une ville!");
+            nom = pNom;
+            pays = pPays;
+            nbHabitants = pNbHabitants;
+            this.setCategorie();
 
-        //On incrémente nos variables à chaque appel aux constructeurs
-        nbreInstances++;
-        nbreInstancesBis++;  
+            //On incrémente nos variables à chaque appel aux constructeurs
+            nbreInstances++;
+            nbreInstancesBis++;
+        }  
     }
 
     //*************   ACCESSEURS *************

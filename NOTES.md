@@ -117,8 +117,216 @@ Le polymorphisme nous permet ceci :
 
 ## Exceptions
 
+### Bloc try...catch
+
 - Bloc try...catch pour capturer des execeptions
 
 - getMessage() de la classe Exception, nous permet de préciser la nature de l'erreur.
 
 - le bloc finally permet de définir des actions à effectuer qu'il y est une exception où qu'il n'y en ait pas.
+
+### Exceptions personnalisées
+
+- Il faut créer une classe héritant de la classe Exception, une telle classe doit se terminer par `Exception`. Elle doit renvoyer et gérer l'exception.
+
+- `throws` signale à la JVM qu'un morceau de code, une méthode, une classe, ... est potentiellement dangereux et qu'il faut utiliser un bloc `try...catch`. throws est suivi du nom de la classe qui va gérer l'exception.
+
+- `throw` permet de lever une exception manuellement en instanciant un objet de type Exception (ou un objet hérité).
+
+- Exemple avec la classe Ville et l'exception NombreHabitantException.
+
+- Il faudra obligatoirement gérer les exceptions custom avec des blocs `try...catch` sinon le code ne compilera pas.
+
+- On peut évidemment utiliser des méthodes de la classe Exception avec la classe exception fille.
+
+- Pour les classes filles héritant d'une classe levant une exception via l'une de leurs méthodes. Il faut propager cette exception dans a classe fille. Voir second constrcuteur de la classe Capitale.
+ 
+- Nous ne pouvons pas faire de `try...catch` avec un super (constructeur) à l'intérieur.
+
+### La gestion de plusieurs exceptions
+
+- L'ordre des blocs `catch` a son importance.
+
+### Java 7 le multi-catch
+
+- Possibilité de catcher plusieurs exceptions dans un seul catch via l'opérateur `|`
+
+    //Gestion de plusieurs exceptions différentes
+    catch (NombreHabitantException | NomVilleException e2){
+        System.out.println(e2.getMessage());
+    }
+
+## Les énumérations
+
+- Les énumérations se déclarent comme une classe
+
+    public enum Langage {
+        JAVA,
+        C,
+        CPlus,
+        PHP;
+    }
+
+- C'est comme si nous avions 4 objets (JAVA, C, CPlus, PHP) partageant tous les mêmes méthodes issues de la classe java.lang.Object come n'imorte quel autre objet.
+
+- Les enumérations héritent de la classe java.lang.Enum.
+
+- Il n'y a pas de déclaration de portée, ni de type: les énumérations se comportent comme des variables statiques déclarées `public`.
+
+- On écrira Langage.JAVA
+
+- La méthode `values()` permet de retourner la liste des déclarations de l'énumération.
+
+- la méthode `toString()` retourne le nom de l'objet défini dans l'énumération.
+
+- On peut définir un constructeur dans une énumération. Ce constructeur n'a pas de portée, il est toujours considérée comme `private` afin de préserver les valeurs définies dans l'enum.
+
+## Les collections d'objets
+
+- Les collections se trouvent dans le package `java.util`
+
+### Les différents types de collections
+
+- Les collections sont des interfaces encapsulant la majeure partie des méthodes utilisables avec toutes les implémentations concrètes.
+
+![Hirarchie des collections](./pictures/386096.png)
+
+- les objets List servent à stocker des objets sans conditions particulières sur la façon de les stocker. Acceptent toutes les valeurs, même les valeurs null.
+
+- Les types Set n'autorisent pas deux fois la même valeur (le même objet), ce qui est pratique pour une liste d'éléments uniques.
+
+- Les Map fonctionnent avec un sytème de clé.
+
+### Les objets List
+
+- Les objets appartenant à la catégorie List sont des tableaux extensibles à volonté.
+
+- On y trouve les `Vector`, `LinkedList`, `ArrayList`
+
+- On récupère les éléments de la liste via leur indice.
+
+- Implémentent l'interface `Iterator`. Objet qui a pour rôle de parcourir une collection.
+
+#### LinkedList (liste chaînée)
+
+- Liste dont chaque élément contient une référence à l'élément précédent et une référence à l'élément suivant.
+
+![Schéma liste chaînée](./pictures/396275.png)
+
+- Inadaptée pour des collections avec beaucoup d'objets.
+
+- Utile si l'on souhaite ajouter ou supprimer des éléments en milieu de liste.
+
+#### ArrayList
+
+- Nous pouvons metter tout ce que nous voulons dans une ArrayList, même null.
+
+- Célèbres méthodes ArrayList : `add()`, `get(int index)`, `remove(int index)`, `isEmpty(int index)`, `removeAll()`, `contains(Object element)`
+
+- Rapide en lecture contrairement aux LinkedList.
+
+- Plus lente que les LinkedList pour ajouter des éléments en milieu de liste.
+
+### Les objets Map
+
+- Fonctionne avec un couple clé-valeur
+
+- On y trouve `HashTable`, `HashMap`, `TreeMap`, `WeakHashMap`, ...
+
+- la clé qui sert à identifier une entrée dans notre collection est unique.
+
+- Une valeur peut être associé à plusieurs clés.
+
+- Plus la Map contiendra de valeurs, plus elle sera lente et lourde (normal car stocke une valeur supplémentaire que les autres collections, la clé).
+
+#### HasTable (table de hachage)
+
+- On le parcourt grâce à ses clés via la classe `Enumeration`.
+
+- Célèbres méthodes HashTable : `isEmpty()`, `contains(Object value)`( ou `containsValue(Object value)`), `containsKey(Object key)`, `put(Object key, Object value)`, `elements()`, `keys()`.
+
+- Un objet `HashTable` n'accepte pas la valeur `null`.
+
+- un objet `HashTable` est thread safe, c'est-à-dire qu'il est utilisable dans plusieurs threads simultanément sans qu'il y ait un risque de conflit de données.
+
+#### HasMap
+
+- Quasiment identique à `HashTable`.
+
+- Accepte la valeur `null`.
+
+- Il n'est pas thread safe.
+
+### Les objets Set
+
+- Collection qui n'accepte pas les doublons.
+
+- On y trouve : `HashSet`, `TreeSet`, `LinkedHashSet`, ...
+
+- Certains `Set` n'acceptent pas la valeur `null` ou certains types d'objets.
+
+- Adaptés pour manipuler une grande quantité de données. Mais peu baisser en performance au niveau des insertions. `HashSet` privilégié. Si on veut souvent trier la collection mieux utiliser un `TreeSet`.
+
+#### HashSet
+
+- On peut le parcourir avec un objet `Iterator` ou extraire de cet objet un tableau d'Object.
+
+- Célèbres méthodes HashSet : `add()`, `isEmpty()`, `contains(Object value)`, `iterator()`,  `remove(Object o)`,  `toArray()`.
+
+## La généricité en Java
+
+- Faire des classes qui n'acceptent qu'un certain type d'objets ou de données de façon dynamique.
+
+### Principe de base
+
+- Une fois instancié avec un type, l'objet ne pourra travailler qu'avec ce type de données.
+
+- Exemple d'une instanciation:
+
+    public static void main(String[] args) {
+        Solo<Integer> val = new Solo<Integer>(12);
+    int nbre = val.getValeur();
+    }
+
+- On peut bien sur instancier autant d'objet Solo avec un d'autre type générique.
+
+    public static void main(String[] args) {
+        Solo<Integer> val = new Solo<Integer>();
+        Solo<String> valS = new Solo<String>("TOTOTOTO");
+        Solo<Float> valF = new Solo<Float>(12.2f);
+        Solo<Double> valD = new Solo<Double>(12.202568);
+    }
+
+- Possibilité de définir des classes génériques prenant deux types, voir classe Duo.java.
+
+#### Notes
+
+- Lorsque on déclare une variable de type primitif on peut utiliser ses classes enveloppes (exemple Integer est la classe enveloppe de int) et ainsi profiter des méthodes de la classe Object.
+
+- Depuis Java 5, nous avons l'autoboxing permettant de transformer automatiquement un type primitif en classe wrapper (c'est le boxing) et inversement (c'est l'unboxing)
+
+- Exemple :
+
+    public static void main(String[] args){ 
+        int i = new Integer(12);         //Est équivalent à int i = 12
+        double d = new Double(12.2586);  //Est équivalent à double d = 12.2586
+        Double d = 12.0;
+        Character c = 'C';
+        al = new ArrayList();
+        //Avant Java 5 il fallait faire al.add(new Integer(12))
+        //Depuis Java 5 il suffit de faire
+        al.add(12);
+        //…
+    }
+
+### Généricité et collections
+
+- Possibilité d'utiliser la généricité sur des objets servant à gérer des collections.
+
+#### Héritage et généricité
+
+- Pas possible qu'une liste de type mère recoive une liste de type fille (listMere = listFille).
+
+- Le `wildcard`, ou le symbole `?` permet de déclarer une collection acceptant n'importe quel type d'objet.
+
+- Pour qu'une List, ArrayList puisse avoir les instances d'une classe mère mais également de ses classes filles

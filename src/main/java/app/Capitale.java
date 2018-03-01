@@ -12,7 +12,7 @@ public class Capitale extends Ville{
     }    
         
     //Constructeur d'initialisation de capitale
-    public Capitale(String nom, int hab, String pays, String monument){
+    public Capitale(String nom, int hab, String pays, String monument) throws NombreHabitantException, NomVilleException{
         super(nom, pays, hab);
         this.monument = monument;
     }
