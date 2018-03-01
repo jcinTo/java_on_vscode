@@ -329,4 +329,9 @@ Le polymorphisme nous permet ceci :
 
 - Le `wildcard`, ou le symbole `?` permet de déclarer une collection acceptant n'importe quel type d'objet.
 
-- Pour qu'une List, ArrayList puisse avoir les instances d'une classe mère mais également de ses classes filles
+- Pour qu'une List, ArrayList puisse avoir les instances d'une classe mère mais également de ses classes filles nous pouvons écrire le code suivant :
+
+    //List n'acceptant que des instances de Voiture ou de ses sous-classes
+    List<? extends Voiture> listVoitureSP = new ArrayList<VoitureSansPermis>();
+
+- Ce type d'idée est très intéressant pour définir des méthodes génériques
